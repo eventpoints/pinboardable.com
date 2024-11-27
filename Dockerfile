@@ -15,15 +15,6 @@ COPY composer.json composer.lock symfony.lock ./
 
 RUN composer install --no-dev --prefer-dist --no-interaction --no-scripts
 
-# Install npm packages
-COPY package.json package-lock.json webpack.config.js ./
-RUN npm install
-
-# Production yarn build
-COPY ./assets ./assets
-
-RUN npm run build
-
 COPY . .
 
 # Need to run again to trigger scripts with application code present
