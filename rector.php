@@ -7,7 +7,6 @@ use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 
 return RectorConfig::configure()
         ->withPaths([
-                __DIR__ . '/assets',
                 __DIR__ . '/config',
                 __DIR__ . '/public',
                 __DIR__ . '/src',
