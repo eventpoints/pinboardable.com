@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center g-3">
+            <div class="col-12 col-md-6">
+
+                <div class="card mb-3">
+                    <div class="card-body lead text-center">
+                        Pinboardable is a free platform where people can showcase their ventures—whether it's a startup,
+                        side project, new business, creative endeavor, or product launch.
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    {{ form_start(pinFilter) }}
+                    <div class="card-body">
+                        <div class="row justify-content-between align-items-center g-3">
+                            <div class="col-12 col-md-5">
+                                {{ form_row(pinFilter.keyword) }}
+                            </div>
+                            <div class="col-12 col-md-5">
+                                {{ form_row(pinFilter.pinTypeEnum) }}
+                            </div>
+                            <div class="col-12 col-md-2 text-end">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-search fs-3"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_end(pinFilter) }}
+                </div>
+
+                {% for pin in pins %}
+                {% else %}
+                    <div class="text-muted text-center">{{ 'no-pins-found'|trans }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,92 @@
+version: "3.9"
+
+networks:
+  traefik:
+    external: true
+  internal:
+    external: false
+
+volumes:
+  php_socket:
+  caddy_data:
+  caddy_config:
+
+services:
+  php:
+    image: ghcr.io/eventpoints/pinboardable.com-php:main
+    volumes:
+      - php_socket:/var/run/php
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+    healthcheck:
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+    depends_on:
+      - database
+    restart: unless-stopped
+    environment:
+      MERCURE_PUBLIC_URL: "https://pinboardable.com/.well-known/mercure"
+      APP_ENV: "prod"
+      DATABASE_URL: "postgresql://__PINBOARDABLE_POSTGRES_USER__:__PINBOARDABLE_POSTGRES_PASSWORD__@database:5432/__PINBOARDABLE_POSTGRES_DBNAME__?serverVersion=13&charset=utf8"
+      MERCURE_JWT_SECRET: "__PINBOARDABLE_MERCURE_JWT_SECRET__"
+      APP_SECRET: "__PINBOARDABLE_APP_SECRET__"
+      MAILER_DSN: "__PINBOARDABLE_MAILER_DSN__"
+      MESSENGER_TRANSPORT_DSN: "__PINBOARDABLE_MESSENGER_TRANSPORT_DSN__"
+      CLOUDFLARE_TURNSTILE_PUBLIC_KEY: "__PINBOARDABLE_CLOUDFLARE_TURNSTILE_PUBLIC_KEY__"
+      CLOUDFLARE_TURNSTILE_PRIVATE_KEY: "__PINBOARDABLE_CLOUDFLARE_TURNSTILE_PRIVATE_KEY__"
+    networks:
+      - internal
+
+  caddy:
+    image: ghcr.io/eventpoints/pinboardable.com-caddy:main
+    depends_on:
+      - php
+    restart: unless-stopped
+    environment:
+      SERVER_NAME: ":80"
+      MERCURE_PUBLISHER_JWT_KEY: "__PINBOARDABLE_MERCURE_JWT_SECRET__"
+      MERCURE_SUBSCRIBER_JWT_KEY: "__PINBOARDABLE_MERCURE_JWT_SECRET__"
+    volumes:
+      - php_socket:/var/run/php
+      - caddy_data:/data
+      - caddy_config:/config
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    expose:
+      - "80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pinboardable.rule=Host(`pinboardable.com`, `www.pinboardable.com`)"
+      - "traefik.http.routers.pinboardable.tls=true"
+      - "traefik.http.routers.pinboardable.tls.certresolver=le"
+    networks:
+      - traefik
+      - internal
+
+  database:
+    image: postgres:13
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "__PINBOARDABLE_POSTGRES_DBNAME__"
+      POSTGRES_PASSWORD: "__PINBOARDABLE_POSTGRES_PASSWORD__"
+      POSTGRES_USER: "__PINBOARDABLE_POSTGRES_USER__"
+    volumes:
+      - ./db-data:/var/lib/postgresql/data:rw
+    networks:
+      - internal
+
+  adminer:
+    image: adminer:4.8.0
+    restart: unless-stopped
+    environment:
+      ADMINER_DEFAULT_SERVER: database
+    expose:
+      - "8080"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pinboardable-adminer.rule=Host(`adminer.pinboardable.com`)"
+      - "traefik.http.routers.pinboardable-adminer.tls=true"
+      - "traefik.http.routers.pinboardable-adminer.tls.certresolver=le"
+    networks:
+      - internal
+      - traefik
