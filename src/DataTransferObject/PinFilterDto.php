@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataTransferObject;
 
 use App\Enum\PinTypeEnum;
@@ -7,6 +9,7 @@ use App\Enum\PinTypeEnum;
 final class PinFilterDto
 {
     private null|string $keyword = null;
+
     private null|PinTypeEnum $pinTypeEnum = null;
 
     public function getKeyword(): ?string
@@ -28,5 +31,4 @@ final class PinFilterDto
     {
         $this->pinTypeEnum = $pinTypeEnum;
     }
-
 }

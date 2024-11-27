@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\DataTransferObject\PinFilterDto;
@@ -14,10 +16,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class PinController extends AbstractController
 {
-
-
     public function __construct(
-            private readonly PinRepository $pinRepository
+        private readonly PinRepository $pinRepository
     )
     {
     }
@@ -33,14 +33,14 @@ class PinController extends AbstractController
         if ($pinFilter->isSubmitted() && $pinFilter->isValid()) {
             $pins = $this->pinRepository->findByFilter($pinFilterDto);
             return $this->render('pins/index.html.twig', [
-                    'pinFilter' => $pinFilter,
-                    'pins' => $pins
+                'pinFilter' => $pinFilter,
+                'pins' => $pins,
             ]);
         }
 
         return $this->render('pins/index.html.twig', [
-                'pinFilter' => $pinFilter,
-                'pins' => $pins
+            'pinFilter' => $pinFilter,
+            'pins' => $pins,
         ]);
     }
 
@@ -55,8 +55,7 @@ class PinController extends AbstractController
         }
 
         return $this->render('pins/create.html.twig', [
-                'pinForm' => $pinForm
+            'pinForm' => $pinForm,
         ]);
     }
-
 }

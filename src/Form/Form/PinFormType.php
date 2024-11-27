@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form\Form;
 
 use App\Entity\Pin;
@@ -15,7 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class PinFormType extends AbstractType
 {
     public function __construct(
-            private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator
     )
     {
     }
@@ -23,60 +25,60 @@ class PinFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-                ->add('title', TextType::class, [
-                        'label' => $this->translator->trans('title'),
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'attr' => [
-                                'placeholder' => $this->translator->trans('title'),
-                        ],
-                ])
-                ->add('description', TextType::class, [
-                        'label' => $this->translator->trans('description'),
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'attr' => [
-                                'placeholder' => $this->translator->trans('description'),
-                        ],
-                ])
-                ->add('url', UrlType::class, [
-                        'label' => $this->translator->trans('url'),
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'attr' => [
-                                'placeholder' => $this->translator->trans('url'),
-                        ],
-                ])
-                ->add('email', TextType::class, [
-                        'mapped' => false,
-                        'label' => $this->translator->trans('email'),
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'attr' => [
-                                'placeholder' => $this->translator->trans('email'),
-                        ],
-                ])
-                ->add('pinTypeEnum', EnumType::class, [
-                        'class' => PinTypeEnum::class,
-                        'choice_label' => 'value',
-                        'autocomplete' => true,
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'attr' => [
-                                'placeholder' => $this->translator->trans('email'),
-                        ],
-                ]);
+            ->add('title', TextType::class, [
+                'label' => $this->translator->trans('title'),
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'attr' => [
+                    'placeholder' => $this->translator->trans('title'),
+                ],
+            ])
+            ->add('description', TextType::class, [
+                'label' => $this->translator->trans('description'),
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'attr' => [
+                    'placeholder' => $this->translator->trans('description'),
+                ],
+            ])
+            ->add('url', UrlType::class, [
+                'label' => $this->translator->trans('url'),
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'attr' => [
+                    'placeholder' => $this->translator->trans('url'),
+                ],
+            ])
+            ->add('email', TextType::class, [
+                'mapped' => false,
+                'label' => $this->translator->trans('email'),
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'attr' => [
+                    'placeholder' => $this->translator->trans('email'),
+                ],
+            ])
+            ->add('pinTypeEnum', EnumType::class, [
+                'class' => PinTypeEnum::class,
+                'choice_label' => 'value',
+                'autocomplete' => true,
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'attr' => [
+                    'placeholder' => $this->translator->trans('email'),
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-                'data_class' => Pin::class,
+            'data_class' => Pin::class,
         ]);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form\Filter;
 
 use App\DataTransferObject\PinFilterDto;
@@ -14,7 +16,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class PinFilterType extends AbstractType
 {
     public function __construct(
-            private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator
     )
     {
     }
@@ -22,34 +24,34 @@ class PinFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-                ->add('keyword', TextType::class, [
-                        'required' => false,
-                        'label' => $this->translator->trans('keyword'),
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'attr' => [
-                                'placeholder' => $this->translator->trans('keyword'),
-                        ],
-                ])
-                ->add('pinTypeEnum', EnumType::class, [
-                        'required' => false,
-                        'class' => PinTypeEnum::class,
-                        'choice_label' => 'value',
-                        'autocomplete' => true,
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'attr' => [
-                                'placeholder' => $this->translator->trans('email'),
-                        ],
-                ]);
+            ->add('keyword', TextType::class, [
+                'required' => false,
+                'label' => $this->translator->trans('keyword'),
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'attr' => [
+                    'placeholder' => $this->translator->trans('keyword'),
+                ],
+            ])
+            ->add('pinTypeEnum', EnumType::class, [
+                'required' => false,
+                'class' => PinTypeEnum::class,
+                'choice_label' => 'value',
+                'autocomplete' => true,
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'attr' => [
+                    'placeholder' => $this->translator->trans('email'),
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-                'data_class' => PinFilterDto::class,
+            'data_class' => PinFilterDto::class,
         ]);
     }
 }

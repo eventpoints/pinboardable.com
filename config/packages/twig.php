@@ -6,14 +6,14 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->extension('twig', [
-            'file_name_pattern' => '*.twig',
-            'form_themes' => [
-                    'bootstrap_5_layout.html.twig'
-            ]
+        'file_name_pattern' => '*.twig',
+        'form_themes' => [
+            'bootstrap_5_layout.html.twig',
+        ],
     ]);
     if ($containerConfigurator->env() === 'test') {
         $containerConfigurator->extension('twig', [
-                'strict_variables' => true,
+            'strict_variables' => true,
         ]);
     }
 };

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Enum\PinTypeEnum;
@@ -17,7 +19,7 @@ class Pin
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\Column(type: 'uuid', unique: true)]
     #[ORM\CustomIdGenerator(UuidGenerator::class)]
-    private Uuid $id;
+    private null|Uuid $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
@@ -97,5 +99,4 @@ class Pin
     {
         $this->url = $url;
     }
-
 }

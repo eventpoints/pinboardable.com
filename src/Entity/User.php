@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\UserRepository;
@@ -17,7 +19,7 @@ class User implements UserInterface
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\Column(type: 'uuid', unique: true)]
     #[ORM\CustomIdGenerator(UuidGenerator::class)]
-    private Uuid $id;
+    private null|Uuid $id = null;
 
     #[ORM\Column(length: 180)]
     private ?string $email = null;
