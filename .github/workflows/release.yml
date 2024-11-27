@@ -25,7 +25,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ghcr.io/eventpoints/pinbaordable.com-php
+            ghcr.io/eventpoints/pinboardable.com-php
           # generate Docker tags based on the following events/attributes
           tags: |
             type=ref,event=branch
@@ -38,7 +38,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ghcr.io/eventpoints/pinbaordable.com-caddy
+            ghcr.io/eventpoints/pinboardable.com-caddy
           # generate Docker tags based on the following events/attributes
           tags: |
             type=ref,event=branch
@@ -106,7 +106,7 @@ jobs:
         with:
           switches: -azvr --exclude='docker-compose.production-template.yml'
           path: ./.deployment/
-          remote_path: /pinbaordable.com
+          remote_path: /pinboardable.com
           remote_host: ${{ secrets.DEPLOY_HOST }}
           remote_user: ${{ secrets.DEPLOY_USERNAME }}
           remote_key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
@@ -118,6 +118,6 @@ jobs:
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           script_stop: true
           script: |
-            cd /pinbaordable.com
+            cd /pinboardable.com
             docker-compose pull
             docker-compose up -d

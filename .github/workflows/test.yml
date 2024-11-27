@@ -8,14 +8,14 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     env:
-        DATABASE_URL: postgresql://pinbaordable:pinbaordable@127.0.0.1:5432/pinbaordable?serverVersion=13&charset=utf8
+        DATABASE_URL: postgresql://pinboardable:pinboardable@127.0.0.1:5432/pinboardable?serverVersion=13&charset=utf8
 
     services:
       db:
           image: postgres:13
           env:
-              POSTGRES_USER: pinbaordable
-              POSTGRES_PASSWORD: pinbaordable
+              POSTGRES_USER: pinboardable
+              POSTGRES_PASSWORD: pinboardable
           options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
           ports:
               - 5432:5432
