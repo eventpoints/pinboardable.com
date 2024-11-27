@@ -50,6 +50,8 @@ services:
         environment:
             POSTGRES_DB: PINBOARDABLE_DEV_DB_V1
             POSTGRES_PASSWORD: pinboardable
+
+
             POSTGRES_USER: root
         volumes:
             - ./docker/db/data:/var/lib/postgresql/data:rw
