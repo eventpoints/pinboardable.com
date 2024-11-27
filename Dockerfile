@@ -22,6 +22,6 @@ RUN composer install --no-dev --no-interaction --classmap-authoritative
 RUN composer symfony:dump-env prod
 RUN chmod -R 777 var
 
-FROM ghcr.io/eventpoints/caddy:main AS caddy
+FROM ghcr.io/eventpoints/caddy:sha-fc43d4e AS caddy
 
 COPY --from=php /app/public public/
