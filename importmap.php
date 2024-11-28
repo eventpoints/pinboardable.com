@@ -52,4 +52,10 @@ return [
         'version' => '2.4.1',
         'type' => 'css',
     ],
+    'stimulus-textarea-autogrow' => [
+        'version' => '4.1.0',
+    ],
+    '@stimulus-components/read-more' => [
+        'version' => '5.0.0',
+    ],
 ];

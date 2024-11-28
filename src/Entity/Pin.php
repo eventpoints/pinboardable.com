@@ -7,6 +7,8 @@ namespace App\Entity;
 use App\Enum\PinTypeEnum;
 use App\Repository\PinRepository;
 use Carbon\CarbonImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
@@ -36,9 +38,19 @@ class Pin
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private CarbonImmutable $createdAt;
 
+    #[ORM\ManyToOne(inversedBy: 'pins')]
+    private ?User $owner = null;
+
+    /**
+     * @var Collection<int, Tag>
+     */
+    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'pins', cascade: ['persist', 'remove'])]
+    private Collection $tags;
+
     public function __construct()
     {
         $this->createdAt = new CarbonImmutable();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): null|Uuid
@@ -98,5 +110,44 @@ class Pin
     public function setUrl(?string $url): void
     {
         $this->url = $url;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): static
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tag>
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): static
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+            $tag->addPin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): static
+    {
+        if ($this->tags->removeElement($tag)) {
+            $tag->removePin($this);
+        }
+
+        return $this;
     }
 }

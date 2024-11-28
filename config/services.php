@@ -6,6 +6,8 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
+    $parameters = $containerConfigurator->parameters();
+    $parameters->set('CLOUDFLARE_TURNSTILE_PRIVATE_KEY', '%env(CLOUDFLARE_TURNSTILE_PRIVATE_KEY)%');
 
     $services->defaults()
         ->autowire()

@@ -3,7 +3,7 @@
 {% block body %}
     <div class="container">
         <div class="row justify-content-center g-3">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-8">
 
                 <div class="card mb-3">
                     <div class="card-body lead text-center">
@@ -22,7 +22,10 @@
                             <div class="col-12 col-md-5">
                                 {{ form_row(pinFilter.pinTypeEnum) }}
                             </div>
-                            <div class="col-12 col-md-2 text-end">
+                            <div class="col-12 col-md-2 d-flex justify-content-between">
+                                <a href="{{ path('landing') }}" class="btn btn-light">
+                                    <i class="bi bi-arrow-counterclockwise fs-3"></i>
+                                </a>
                                 <button type="submit" class="btn btn-primary">
                                     <i class="bi bi-search fs-3"></i>
                                 </button>
@@ -32,10 +35,43 @@
                     {{ form_end(pinFilter) }}
                 </div>
 
-                {% for pin in pins %}
-                {% else %}
-                    <div class="text-muted text-center">{{ 'no-pins-found'|trans }}</div>
-                {% endfor %}
+                <div class="row g-3 justify-content-between" data-bs-target="#navbar-example3"
+                     data-bs-smooth-scroll="true">
+                    {% for pin in pins %}
+                        <div class="col-12 col-md-6">
+                            <div class="card" id="pin_{{ pin.id }}">
+                                <div class="card-body">
+                                    <div class="fw-bold">{{ pin.title }}</div>
+                                    <div class="small text-muted">{{ pin.createdAt.diffForHumans }}</div>
+                                    <hr class="my-2"/>
+                                    {% for tag in pin.tags %}
+                                        <div class="badge text-bg-primary">{{ tag.title|trans }}</div>
+                                    {% endfor %}
+                                    <hr class="my-2"/>
+                                    <div class="text-muted" {{ stimulus_controller('read-more', {
+                                        'more-text': 'read-more',
+                                        'less-text': 'read less'
+                                    }) }}>
+                                        <div
+                                                class="readmore-content" {{ stimulus_target('read-more', 'content') }}>{{ pin.description|nl2br }}</div>
+                                        <div class="text-center my-1">
+                                            <a class="link-dark" {{ stimulus_action('read-more', 'toggle') }}>{{ 'read-more'|trans }}</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="card-footer text-end">
+                                    <a target="_blank" class="btn btn-primary rounded-pill"
+                                       href="{{ absolute_url(pin.url) }}">
+                                        <i class="bi bi-arrow-right-short fs-4"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="text-muted text-center">{{ 'no-pins-found'|trans }}</div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>

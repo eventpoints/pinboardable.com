@@ -1,5 +1,7 @@
 import { startStimulusApp } from '@symfony/stimulus-bundle';
+import TextareaAutogrow from 'stimulus-textarea-autogrow'
+import ReadMore from '@stimulus-components/read-more'
 
 const app = startStimulusApp();
-// register any custom, 3rd party controllers here
-// app.register('some_controller_name', SomeImportedController);
+app.register('textarea-autogrow', TextareaAutogrow)
+app.register('read-more', ReadMore)

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,6 +31,22 @@ class User implements UserInterface
      */
     #[ORM\Column]
     private array $roles = [];
+
+    /**
+     * @var Collection<int, Pin>
+     */
+    #[ORM\OneToMany(targetEntity: Pin::class, mappedBy: 'owner',cascade: ['persist', 'detach'])]
+    private Collection $pins;
+
+    /**
+     * @param string $email
+     */
+    public function __construct(string $email)
+    {
+        $this->email = $email;
+        $this->pins = new ArrayCollection();
+    }
+
 
     public function getId(): null|Uuid
     {
@@ -88,5 +106,35 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Pin>
+     */
+    public function getPins(): Collection
+    {
+        return $this->pins;
+    }
+
+    public function addPin(Pin $pin): static
+    {
+        if (!$this->pins->contains($pin)) {
+            $this->pins->add($pin);
+            $pin->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removePin(Pin $pin): static
+    {
+        if ($this->pins->removeElement($pin)) {
+            // set the owning side to null (unless already changed)
+            if ($pin->getOwner() === $this) {
+                $pin->setOwner(null);
+            }
+        }
+
+        return $this;
     }
 }

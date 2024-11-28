@@ -8,6 +8,7 @@
     {% endblock %}
 
     {% block javascripts %}
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
         {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
 </head>
