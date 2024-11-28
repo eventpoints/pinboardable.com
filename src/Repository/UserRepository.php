@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Entity\Pin;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -22,22 +21,22 @@ class UserRepository extends ServiceEntityRepository
     public function save(User $entity, bool $flush = false): void
     {
         $this->getEntityManager()
-                ->persist($entity);
+            ->persist($entity);
 
         if ($flush) {
             $this->getEntityManager()
-                    ->flush();
+                ->flush();
         }
     }
 
     public function remove(User $entity, bool $flush = false): void
     {
         $this->getEntityManager()
-                ->remove($entity);
+            ->remove($entity);
 
         if ($flush) {
             $this->getEntityManager()
-                    ->flush();
+                ->flush();
         }
     }
 
@@ -50,9 +49,11 @@ class UserRepository extends ServiceEntityRepository
      */
     public function findByEmailOrCreate(string $email, ?callable $createCallback = null): User
     {
-        $user = $this->findOneBy(['email' => $email]);
+        $user = $this->findOneBy([
+            'email' => $email,
+        ]);
 
-        if (!$user) {
+        if (! $user) {
             $user = new User(email: $email);
 
             if ($createCallback) {
@@ -62,5 +63,4 @@ class UserRepository extends ServiceEntityRepository
 
         return $user;
     }
-
 }

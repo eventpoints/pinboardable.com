@@ -35,18 +35,14 @@ class User implements UserInterface
     /**
      * @var Collection<int, Pin>
      */
-    #[ORM\OneToMany(targetEntity: Pin::class, mappedBy: 'owner',cascade: ['persist', 'detach'])]
+    #[ORM\OneToMany(targetEntity: Pin::class, mappedBy: 'owner', cascade: ['persist', 'detach'])]
     private Collection $pins;
 
-    /**
-     * @param string $email
-     */
     public function __construct(string $email)
     {
         $this->email = $email;
         $this->pins = new ArrayCollection();
     }
-
 
     public function getId(): null|Uuid
     {
@@ -118,7 +114,7 @@ class User implements UserInterface
 
     public function addPin(Pin $pin): static
     {
-        if (!$this->pins->contains($pin)) {
+        if (! $this->pins->contains($pin)) {
             $this->pins->add($pin);
             $pin->setOwner($this);
         }

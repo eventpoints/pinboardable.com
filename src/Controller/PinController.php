@@ -20,9 +20,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class PinController extends AbstractController
 {
     public function __construct(
-            private readonly PinRepository       $pinRepository,
-            private readonly UserRepository      $userRepository,
-            private readonly HttpClientInterface $cloudflareTurnstileClient
+        private readonly PinRepository $pinRepository,
+        private readonly UserRepository $userRepository,
+        private readonly HttpClientInterface $cloudflareTurnstileClient
     )
     {
     }
@@ -38,14 +38,14 @@ class PinController extends AbstractController
         if ($pinFilter->isSubmitted() && $pinFilter->isValid()) {
             $pins = $this->pinRepository->findByFilter($pinFilterDto);
             return $this->render('pins/index.html.twig', [
-                    'pinFilter' => $pinFilter,
-                    'pins' => $pins,
+                'pinFilter' => $pinFilter,
+                'pins' => $pins,
             ]);
         }
 
         return $this->render('pins/index.html.twig', [
-                'pinFilter' => $pinFilter,
-                'pins' => $pins,
+            'pinFilter' => $pinFilter,
+            'pins' => $pins,
         ]);
     }
 
@@ -58,16 +58,16 @@ class PinController extends AbstractController
         if ($pinForm->isSubmitted() && $pinForm->isValid()) {
 
             $response = $this->cloudflareTurnstileClient->request(Request::METHOD_POST, '/turnstile/v0/siteverify', [
-                    'body' => [
-                            'secret' => $this->getParameter('CLOUDFLARE_TURNSTILE_PRIVATE_KEY'),
-                            'response' => $request->request->get('cf-turnstile-response'),
-                            'ip' => $request->getClientIp(),
-                    ],
+                'body' => [
+                    'secret' => $this->getParameter('CLOUDFLARE_TURNSTILE_PRIVATE_KEY'),
+                    'response' => $request->request->get('cf-turnstile-response'),
+                    'ip' => $request->getClientIp(),
+                ],
             ]);
 
             $isCaptchaSuccessful = json_decode($response->getContent())->success;
 
-            if (!$isCaptchaSuccessful) {
+            if (! $isCaptchaSuccessful) {
                 $pinForm->addError(new FormError(message: 'Captcha verification failed. Please try again.'));
             } else {
                 $email = $pinForm->get('email')->getData();
@@ -81,12 +81,14 @@ class PinController extends AbstractController
                 $this->pinRepository->save(entity: $pin, flush: true);
 
                 $id = $pin->getId();
-                return $this->redirectToRoute('landing', ['_fragment' => "pin_$id"]);
+                return $this->redirectToRoute('landing', [
+                    '_fragment' => "pin_$id",
+                ]);
             }
         }
 
         return $this->render('pins/create.html.twig', [
-                'pinForm' => $pinForm,
+            'pinForm' => $pinForm,
         ]);
     }
 }

@@ -20,7 +20,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class PinFormType extends AbstractType
 {
     public function __construct(
-            private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator
     )
     {
     }
@@ -28,84 +28,84 @@ class PinFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-                ->add('title', TextType::class, [
-                        'label' => $this->translator->trans('purpose'),
-                        'help' => 'What are you promoting?',
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'attr' => [
-                                'placeholder' => $this->translator->trans('purpose'),
-                        ],
-                ])
-                ->add('description', TextType::class, [
-                        'label' => $this->translator->trans('description'),
-                        'constraints' => [
-                                new Length([
-                                        'min' => 20,
-                                        'max' => 1000,
-                                        'minMessage' => 'Your first name must be at least {{ limit }} characters long',
-                                        'maxMessage' => 'Your first name cannot be longer than {{ limit }} characters',
-                                ])
-                        ],
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'attr' => [
-                                'placeholder' => $this->translator->trans('description'),
-                        ],
-                ])
-                ->add('url', UrlType::class, [
-                        'label' => $this->translator->trans('url'),
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'attr' => [
-                                'placeholder' => $this->translator->trans('url'),
-                        ],
-                ])
-                ->add('email', TextType::class, [
-                        'mapped' => false,
-                        'label' => $this->translator->trans('email'),
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'attr' => [
-                                'placeholder' => $this->translator->trans('email'),
-                        ],
-                ])
-                ->add('pinTypeEnum', EnumType::class, [
-                        'class' => PinTypeEnum::class,
-                        'choice_label' => 'value',
-                        'autocomplete' => true,
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'attr' => [
-                                'placeholder' => $this->translator->trans('email'),
-                        ],
-                ])
-                ->add('tags', EntityType::class, [
-                        'class' => Tag::class,
-                        'choice_label' => function (Tag $tag) {
-                            return $this->translator->trans($tag->getTitle());
-                        },
-                        'translation_domain' => false,
-                        'multiple' => true,
-                        'autocomplete' => true,
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'attr' => [
-                                'placeholder' => $this->translator->trans('tags'),
-                        ],
-                ]);
+            ->add('title', TextType::class, [
+                'label' => $this->translator->trans('purpose'),
+                'help' => 'What are you promoting?',
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'attr' => [
+                    'placeholder' => $this->translator->trans('purpose'),
+                ],
+            ])
+            ->add('description', TextType::class, [
+                'label' => $this->translator->trans('description'),
+                'constraints' => [
+                    new Length([
+                        'min' => 20,
+                        'max' => 1000,
+                        'minMessage' => 'Your first name must be at least {{ limit }} characters long',
+                        'maxMessage' => 'Your first name cannot be longer than {{ limit }} characters',
+                    ]),
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'attr' => [
+                    'placeholder' => $this->translator->trans('description'),
+                ],
+            ])
+            ->add('url', UrlType::class, [
+                'label' => $this->translator->trans('url'),
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'attr' => [
+                    'placeholder' => $this->translator->trans('url'),
+                ],
+            ])
+            ->add('email', TextType::class, [
+                'mapped' => false,
+                'label' => $this->translator->trans('email'),
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'attr' => [
+                    'placeholder' => $this->translator->trans('email'),
+                ],
+            ])
+            ->add('pinTypeEnum', EnumType::class, [
+                'class' => PinTypeEnum::class,
+                'choice_label' => 'value',
+                'autocomplete' => true,
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'attr' => [
+                    'placeholder' => $this->translator->trans('email'),
+                ],
+            ])
+            ->add('tags', EntityType::class, [
+                'class' => Tag::class,
+                'choice_label' => function (Tag $tag): string {
+                    return $this->translator->trans($tag->getTitle());
+                },
+                'translation_domain' => false,
+                'multiple' => true,
+                'autocomplete' => true,
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'attr' => [
+                    'placeholder' => $this->translator->trans('tags'),
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-                'data_class' => Pin::class,
+            'data_class' => Pin::class,
         ]);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\TagRepository;
@@ -32,6 +34,7 @@ class Tag
         $this->title = $title;
         $this->pins = new ArrayCollection();
     }
+
     public function getId(): null|Uuid
     {
         return $this->id;
@@ -59,7 +62,7 @@ class Tag
 
     public function addPin(Pin $pin): static
     {
-        if (!$this->pins->contains($pin)) {
+        if (! $this->pins->contains($pin)) {
             $this->pins->add($pin);
         }
 

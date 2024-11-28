@@ -22,26 +22,25 @@ class PinRepository extends ServiceEntityRepository
         parent::__construct($registry, Pin::class);
     }
 
-
     public function save(Pin $entity, bool $flush = false): void
     {
         $this->getEntityManager()
-                ->persist($entity);
+            ->persist($entity);
 
         if ($flush) {
             $this->getEntityManager()
-                    ->flush();
+                ->flush();
         }
     }
 
     public function remove(Pin $entity, bool $flush = false): void
     {
         $this->getEntityManager()
-                ->remove($entity);
+            ->remove($entity);
 
         if ($flush) {
             $this->getEntityManager()
-                    ->flush();
+                ->flush();
         }
     }
 

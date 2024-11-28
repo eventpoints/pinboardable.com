@@ -11,8 +11,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             'bootstrap_5_layout.html.twig',
         ],
         'globals' => [
-                'turnstile_site_key' => '%env(CLOUDFLARE_TURNSTILE_PUBLIC_KEY)%'
-        ]
+            'turnstile_site_key' => '%env(CLOUDFLARE_TURNSTILE_PUBLIC_KEY)%',
+        ],
     ]);
     if ($containerConfigurator->env() === 'test') {
         $containerConfigurator->extension('twig', [
