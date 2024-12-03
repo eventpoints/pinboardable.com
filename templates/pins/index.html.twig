@@ -15,14 +15,17 @@
                 <div class="card mb-3">
                     {{ form_start(pinFilter) }}
                     <div class="card-body">
-                        <div class="row justify-content-between align-items-center g-3">
-                            <div class="col-12 col-md-5">
+                        <div class="row align-items-center g-1">
+                            <div class="col-12 col-md-4">
                                 {{ form_row(pinFilter.keyword) }}
                             </div>
-                            <div class="col-12 col-md-5">
+                            <div class="col-12 col-md-4">
                                 {{ form_row(pinFilter.pinTypeEnum) }}
                             </div>
-                            <div class="col-12 col-md-2 d-flex justify-content-between">
+                            <div class="col-12 col-md-4">
+                                {{ form_row(pinFilter.tags) }}
+                            </div>
+                            <div class="col-12 col-md-12 d-flex justify-content-between">
                                 <a href="{{ path('landing') }}" class="btn btn-light">
                                     <i class="bi bi-arrow-counterclockwise fs-3"></i>
                                 </a>
