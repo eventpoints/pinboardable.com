@@ -10,6 +10,7 @@ return array(
         'no-pins-found' => 'no pins found',
         'create-pin' => 'create pin',
         'pin' => 'pin',
+        'category' => 'category',
         "tag.new-business" => 'new business',
         "tag.business-update" => 'business update',
         "tag.service-launch" => 'service launch',
