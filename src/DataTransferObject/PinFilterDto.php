@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataTransferObject;
 
+use App\Entity\Tag;
 use App\Enum\PinTypeEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -13,6 +14,9 @@ final class PinFilterDto
 
     private null|PinTypeEnum $pinTypeEnum = null;
 
+    /**
+     * @var ArrayCollection<int, Tag>
+     */
     private ArrayCollection $tags;
 
     public function __construct()
@@ -40,14 +44,19 @@ final class PinFilterDto
         $this->pinTypeEnum = $pinTypeEnum;
     }
 
+    /**
+     * @return ArrayCollection<int, Tag>
+     */
     public function getTags(): ArrayCollection
     {
         return $this->tags;
     }
 
+    /**
+     * @param ArrayCollection<int, Tag> $tags
+     */
     public function setTags(ArrayCollection $tags): void
     {
         $this->tags = $tags;
     }
-
 }

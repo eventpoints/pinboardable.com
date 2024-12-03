@@ -10,7 +10,6 @@ use App\Entity\Tag;
 use App\Enum\PinTypeEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Order;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -27,22 +26,22 @@ class PinRepository extends ServiceEntityRepository
     public function save(Pin $entity, bool $flush = false): void
     {
         $this->getEntityManager()
-                ->persist($entity);
+            ->persist($entity);
 
         if ($flush) {
             $this->getEntityManager()
-                    ->flush();
+                ->flush();
         }
     }
 
     public function remove(Pin $entity, bool $flush = false): void
     {
         $this->getEntityManager()
-                ->remove($entity);
+            ->remove($entity);
 
         if ($flush) {
             $this->getEntityManager()
-                    ->flush();
+                ->flush();
         }
     }
 
@@ -53,30 +52,29 @@ class PinRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('pin');
 
-        if (!empty($pinFilterDto->getKeyword())) {
+        if (! empty($pinFilterDto->getKeyword())) {
             $qb->andWhere(
-                    $qb->expr()->like('LOWER(pin.title)', ':keyword')
+                $qb->expr()->like('LOWER(pin.title)', ':keyword')
             );
 
             $qb->orWhere(
-                    $qb->expr()->like('LOWER(pin.description)', ':keyword')
+                $qb->expr()->like('LOWER(pin.description)', ':keyword')
             )->setParameter('keyword', '%' . strtolower($pinFilterDto->getKeyword()) . '%');
         }
 
         if ($pinFilterDto->getPinTypeEnum() instanceof PinTypeEnum) {
             $qb->andWhere(
-                    $qb->expr()->eq('pin.pinTypeEnum', ':type')
+                $qb->expr()->eq('pin.pinTypeEnum', ':type')
             )->setParameter('type', $pinFilterDto->getPinTypeEnum());
         }
 
         if ($pinFilterDto->getTags()->count() > 0) {
             $qb->join('pin.tags', 'tag');
-            $ids = $pinFilterDto->getTags()->map(fn(Tag $tag) => $tag->getId())->toArray();
+            $ids = $pinFilterDto->getTags()->map(fn(Tag $tag): ?\Symfony\Component\Uid\Uuid => $tag->getId())->toArray();
             $qb->andWhere(
-                    $qb->expr()->in('tag.id', ':ids')
+                $qb->expr()->in('tag.id', ':ids')
             )->setParameter('ids', $ids);
         }
-
 
         $qb->orderBy('pin.createdAt', Order::Ascending->value);
 
