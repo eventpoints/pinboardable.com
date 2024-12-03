@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ReactionRepository::class)]
-#[ORM\Index(name:"idx_pin_reaction_type", columns: ["pin_id", "reactionTypeEnum"])]
+#[ORM\Index(name:"idx_pin_reaction_type", columns: ["pin_id", "reaction_type_enum"])]
 class Reaction
 {
     #[ORM\Id]
