@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\DataTransferObject\ReactionDataDto;
@@ -9,8 +11,6 @@ use App\Enum\ReactionTypeEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
-use InvalidArgumentException;
-use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<Reaction>
@@ -23,7 +23,6 @@ class ReactionRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Pin $pin
      * @return array<int, ReactionDataDto>
      */
     public function getCountsForPin(Pin $pin): array
@@ -31,7 +30,7 @@ class ReactionRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('reaction');
         $qb->select('reaction.reactionTypeEnum AS reactionType, COUNT(reaction.id) AS count');
         $qb->andWhere(
-                $qb->expr()->eq('reaction.pin', ':pin')
+            $qb->expr()->eq('reaction.pin', ':pin')
         )->setParameter('pin', $pin->getId(), 'uuid');
 
         $qb->groupBy('reaction.reactionTypeEnum');
@@ -55,27 +54,23 @@ class ReactionRepository extends ServiceEntityRepository
         $reactionDataDtos = [];
         foreach (ReactionTypeEnum::cases() as $type) {
             $reactionDataDtos[] = new ReactionDataDto(
-                    type: $type,
-                    count: $reactionCounts[$type->value]
+                type: $type,
+                count: $reactionCounts[$type->value]
             );
         }
 
-        usort($reactionDataDtos, fn(ReactionDataDto $a, ReactionDataDto $b) => $b->count <=> $a->count);
+        usort($reactionDataDtos, fn(ReactionDataDto $a, ReactionDataDto $b): int => $b->count <=> $a->count);
 
         return $reactionDataDtos;
     }
-
-
-
 
     public function createReaction(ReactionTypeEnum $reactionTypeEnum, Pin $pin): Reaction
     {
         $reaction = new Reaction(reactionTypeEnum: $reactionTypeEnum, pin: $pin);
         $this->getEntityManager()
-                ->persist($reaction);
+            ->persist($reaction);
         $this->getEntityManager()
-                ->flush();
+            ->flush();
         return $reaction;
     }
-
 }

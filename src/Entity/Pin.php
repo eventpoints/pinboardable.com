@@ -168,7 +168,7 @@ class Pin
 
     public function addReaction(Reaction $reaction): static
     {
-        if (!$this->reactions->contains($reaction)) {
+        if (! $this->reactions->contains($reaction)) {
             $this->reactions->add($reaction);
             $reaction->setPin($this);
         }

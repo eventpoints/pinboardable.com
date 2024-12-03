@@ -8,8 +8,6 @@ use App\DataTransferObject\ReactionDataDto;
 use App\Entity\Pin;
 use App\Enum\ReactionTypeEnum;
 use App\Repository\ReactionRepository;
-use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -26,7 +24,7 @@ class ReactionComponent extends AbstractController
     public Pin $pin;
 
     public function __construct(
-            private ReactionRepository $reactionRepository
+        private ReactionRepository $reactionRepository
     )
     {
     }
@@ -34,7 +32,7 @@ class ReactionComponent extends AbstractController
     /**
      * @return array<int, ReactionDataDto>
      */
-    public function getReactions() : array
+    public function getReactions(): array
     {
        return $this->reactionRepository->getCountsForPin(pin: $this->pin);
     }

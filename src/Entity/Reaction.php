@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Enum\ReactionTypeEnum;
@@ -24,10 +26,6 @@ class Reaction
     #[ORM\ManyToOne(inversedBy: 'reactions')]
     private ?Pin $pin = null;
 
-    /**
-     * @param ReactionTypeEnum|null $reactionTypeEnum
-     * @param Pin|null $pin
-     */
     public function __construct(?ReactionTypeEnum $reactionTypeEnum, ?Pin $pin = null)
     {
         $this->reactionTypeEnum = $reactionTypeEnum;
