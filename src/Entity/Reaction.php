@@ -23,14 +23,24 @@ class Reaction
     #[ORM\Column(enumType: ReactionTypeEnum::class)]
     private ReactionTypeEnum|null $reactionTypeEnum = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private null|string $fignerprint = null;
+
     #[ORM\ManyToOne(inversedBy: 'reactions')]
     private ?Pin $pin = null;
 
-    public function __construct(?ReactionTypeEnum $reactionTypeEnum, ?Pin $pin = null)
+    /**
+     * @param ReactionTypeEnum|null $reactionTypeEnum
+     * @param string|null $fignerprint
+     * @param Pin|null $pin
+     */
+    public function __construct(?ReactionTypeEnum $reactionTypeEnum, ?string $fignerprint, ?Pin $pin = null)
     {
         $this->reactionTypeEnum = $reactionTypeEnum;
+        $this->fignerprint = $fignerprint;
         $this->pin = $pin;
     }
+
 
     public function getId(): Uuid|null
     {
@@ -58,4 +68,15 @@ class Reaction
 
         return $this;
     }
+
+    public function getFignerprint(): ?string
+    {
+        return $this->fignerprint;
+    }
+
+    public function setFignerprint(?string $fignerprint): void
+    {
+        $this->fignerprint = $fignerprint;
+    }
+
 }

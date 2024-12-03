@@ -1,10 +1,10 @@
 <div class="d-flex flex-nowrap gap-2 py-3 align-items-center overflow-auto"
-        {{ attributes }} >
-    {% set reactions = this.getReactions %}
+        {{ attributes }}>
+    {% set reactions = this.reactions %}
     {% for reaction in reactions %}
         <button
                 type="button"
-                class="btn btn-outline-secondary rounded-pill text-nowrap"
+                class="btn {{ this.isChecked(reaction.type.value) ? "btn-secondary" : "btn-outline-secondary" }} rounded-pill text-nowrap"
                 data-action="live#action"
                 data-live-action-param="react"
                 data-live-reaction-type-param="{{ reaction.type.value }}"

@@ -30,7 +30,7 @@ class ReactionRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('reaction');
         $qb->select('reaction.reactionTypeEnum AS reactionType, COUNT(reaction.id) AS count');
         $qb->andWhere(
-            $qb->expr()->eq('reaction.pin', ':pin')
+                $qb->expr()->eq('reaction.pin', ':pin')
         )->setParameter('pin', $pin->getId(), 'uuid');
 
         $qb->groupBy('reaction.reactionTypeEnum');
@@ -54,8 +54,8 @@ class ReactionRepository extends ServiceEntityRepository
         $reactionDataDtos = [];
         foreach (ReactionTypeEnum::cases() as $type) {
             $reactionDataDtos[] = new ReactionDataDto(
-                type: $type,
-                count: $reactionCounts[$type->value]
+                    type: $type,
+                    count: $reactionCounts[$type->value]
             );
         }
 
@@ -64,13 +64,35 @@ class ReactionRepository extends ServiceEntityRepository
         return $reactionDataDtos;
     }
 
-    public function createReaction(ReactionTypeEnum $reactionTypeEnum, Pin $pin): Reaction
+    public function createReaction(ReactionTypeEnum $reactionTypeEnum, Pin $pin, string $fingerprint): Reaction
     {
-        $reaction = new Reaction(reactionTypeEnum: $reactionTypeEnum, pin: $pin);
+        $reaction = new Reaction(reactionTypeEnum: $reactionTypeEnum, pin: $pin, fignerprint: $fingerprint);
         $this->getEntityManager()
-            ->persist($reaction);
+                ->persist($reaction);
         $this->getEntityManager()
-            ->flush();
+                ->flush();
         return $reaction;
+    }
+
+    public function save(Reaction $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()
+                ->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()
+                    ->flush();
+        }
+    }
+
+    public function remove(Reaction $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()
+                ->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()
+                    ->flush();
+        }
     }
 }

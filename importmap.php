@@ -61,4 +61,7 @@ return [
     '@symfony/ux-live-component' => [
         'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
     ],
+    'tslib' => [
+        'version' => '2.8.0',
+    ],
 ];
