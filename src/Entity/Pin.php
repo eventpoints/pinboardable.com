@@ -47,10 +47,17 @@ class Pin
     #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'pins', cascade: ['persist', 'remove'])]
     private Collection $tags;
 
+    /**
+     * @var Collection<int, Reaction>
+     */
+    #[ORM\OneToMany(targetEntity: Reaction::class, mappedBy: 'pin')]
+    private Collection $reactions;
+
     public function __construct()
     {
         $this->createdAt = new CarbonImmutable();
         $this->tags = new ArrayCollection();
+        $this->reactions = new ArrayCollection();
     }
 
     public function getId(): null|Uuid
@@ -146,6 +153,36 @@ class Pin
     {
         if ($this->tags->removeElement($tag)) {
             $tag->removePin($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reaction>
+     */
+    public function getReactions(): Collection
+    {
+        return $this->reactions;
+    }
+
+    public function addReaction(Reaction $reaction): static
+    {
+        if (!$this->reactions->contains($reaction)) {
+            $this->reactions->add($reaction);
+            $reaction->setPin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReaction(Reaction $reaction): static
+    {
+        if ($this->reactions->removeElement($reaction)) {
+            // set the owning side to null (unless already changed)
+            if ($reaction->getPin() === $this) {
+                $reaction->setPin(null);
+            }
         }
 
         return $this;

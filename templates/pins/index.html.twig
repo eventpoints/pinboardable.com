@@ -37,7 +37,7 @@
 
                 <div class="row g-3 justify-content-between" data-bs-target="#navbar-example3"
                      data-bs-smooth-scroll="true">
-                    {% for pin in pins %}
+                    {% for pin in pinsPagination %}
                         <div class="col-12 col-md-6">
                             <div class="card" id="pin_{{ pin.id }}">
                                 <div class="card-body">
@@ -60,6 +60,9 @@
 
                                     </div>
                                 </div>
+                                <div class="card-footer">
+                                    {{ component('reaction_component', { pin: pin }) }}
+                                </div>
                                 <div class="card-footer text-end">
                                     <a target="_blank" class="btn btn-primary rounded-pill"
                                        href="{{ absolute_url(pin.url) }}">
@@ -72,6 +75,11 @@
                         <div class="text-muted text-center">{{ 'no-pins-found'|trans }}</div>
                     {% endfor %}
                 </div>
+
+                <div>
+                    {{ knp_pagination_render(pinsPagination) }}
+                </div>
+
             </div>
         </div>
     </div>

@@ -1,0 +1,16 @@
+<div class="d-flex flex-nowrap gap-2 py-3 align-items-center overflow-auto"
+        {{ attributes }} >
+    {% set reactions = this.getReactions %}
+    {% for reaction in reactions %}
+        <button
+                type="button"
+                class="btn btn-outline-secondary rounded-pill text-nowrap"
+                data-action="live#action"
+                data-live-action-param="react"
+                data-live-reaction-type-param="{{ reaction.type.value }}"
+        >
+            <span class="me-2">{{ reaction.type.value }}</span>
+            <span class="badge text-bg-primary rounded-pill">{{ reaction.count|compact_notation }}</span>
+        </button>
+    {% endfor %}
+</div>
