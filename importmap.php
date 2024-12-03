@@ -64,4 +64,7 @@ return [
     'tslib' => [
         'version' => '2.8.0',
     ],
+    '@stimulus-components/clipboard' => [
+        'version' => '5.0.0',
+    ],
 ];

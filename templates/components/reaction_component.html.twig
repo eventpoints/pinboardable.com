@@ -4,7 +4,13 @@
     {% for reaction in reactions %}
         <button
                 type="button"
-                class="btn {{ this.isChecked(reaction.type.value) ? "btn-secondary" : "btn-outline-secondary" }} rounded-pill text-nowrap"
+                class="btn
+                {% if app.request.get('pin') == pin.id %}
+                    {{ this.isChecked(reaction.type.value) ? "btn-light" : "btn-outline-light" }}
+                {% else %}
+                    {{ this.isChecked(reaction.type.value) ? "btn-secondary" : "btn-outline-secondary" }}
+                {% endif %}
+                rounded-pill text-nowrap"
                 data-action="live#action"
                 data-live-action-param="react"
                 data-live-reaction-type-param="{{ reaction.type.value }}"
