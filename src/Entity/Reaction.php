@@ -88,5 +88,4 @@ class Reaction
     {
         $this->createdAt = $createdAt;
     }
-
 }
