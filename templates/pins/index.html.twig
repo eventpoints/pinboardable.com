@@ -28,7 +28,7 @@
                 <div class="card mb-3">
                     {{ form_start(pinFilter) }}
                     <div class="card-body vstack gap-3">
-                        <div class="fw-bold">{{ 'search-pins'|trans }}</div>
+                        <div class="fw-bold">{{ 'search-pins'|trans|title }}</div>
                         <div class="row align-items-center g-3">
                             <div class="col-12 col-md-4">
                                 {{ form_row(pinFilter.keyword) }}
@@ -40,11 +40,11 @@
                                 {{ form_row(pinFilter.tags) }}
                             </div>
                             <div class="col-12 col-md-12 d-flex justify-content-between">
-                                <a href="{{ path('landing') }}" class="btn btn-light">
-                                    {{ 'reset'|trans }}
+                                <a href="{{ path('landing') }}" class="btn rounded-pill btn-outline-secondary">
+                                    {{ 'reset'|trans|title }}
                                 </a>
-                                <button type="submit" class="btn btn-primary">
-                                    {{ 'serach ' }}
+                                <button type="submit" class="btn rounded-pill btn-primary">
+                                    {{ 'serach'|trans|title }}
                                 </button>
                             </div>
                         </div>

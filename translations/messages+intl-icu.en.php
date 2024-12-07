@@ -3,6 +3,7 @@
 return array(
         'title' => 'title',
         'description' => 'description',
+        'search-pins' => 'search projects',
         'url' => 'url',
         'email' => 'E-mail',
         'tags' => 'tags',
