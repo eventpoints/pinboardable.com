@@ -1,3 +1,7 @@
+body {
+    background-color: #eeeee6 !important;
+}
+
 .readmore-content {
     overflow: hidden;
     display: -webkit-box;
