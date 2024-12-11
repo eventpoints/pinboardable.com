@@ -14,11 +14,15 @@
                                 <img class="img-fluid" src="{{ asset('images/bullhorn.webp') }}"/>
                             </div>
                             <div class="col-12 col-md-9">
-                                <div class="lead text-center">
+                                <div class="lead text-center mb-3">
                                     Pinboardable is a free platform where people can showcase their ventures—whether
                                     it's a
                                     startup,
                                     side project, new business, creative endeavor, or product launch.
+                                </div>
+                                <div class="text-end">
+                                    <a class="btn btn-outline-primary rounded-pill"
+                                       href="{{ path('create_pin') }}">{{ 'add-your-project'|trans|title }}</a>
                                 </div>
                             </div>
                         </div>

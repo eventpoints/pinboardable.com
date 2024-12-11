@@ -4,6 +4,7 @@ return array(
         'title' => 'title',
         'description' => 'description',
         'search-pins' => 'search projects',
+        'add-your-project'=> 'add your project',
         'url' => 'url',
         'email' => 'E-mail',
         'tags' => 'tags',
