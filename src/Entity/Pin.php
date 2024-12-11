@@ -32,6 +32,9 @@ class Pin
     #[ORM\Column]
     private ?string $url = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?string $country = null;
+
     #[ORM\Column(enumType: PinTypeEnum::class)]
     private null|PinTypeEnum $pinTypeEnum = null;
 
@@ -187,4 +190,15 @@ class Pin
 
         return $this;
     }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?string $country): void
+    {
+        $this->country = $country;
+    }
+
 }

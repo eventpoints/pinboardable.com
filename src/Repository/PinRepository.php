@@ -62,10 +62,10 @@ class PinRepository extends ServiceEntityRepository
             )->setParameter('keyword', '%' . strtolower($pinFilterDto->getKeyword()) . '%');
         }
 
-        if ($pinFilterDto->getPinTypeEnum() instanceof PinTypeEnum) {
+        if (!empty($pinFilterDto->getCountry())) {
             $qb->andWhere(
-                $qb->expr()->eq('pin.pinTypeEnum', ':type')
-            )->setParameter('type', $pinFilterDto->getPinTypeEnum());
+                $qb->expr()->eq('pin.country', ':country')
+            )->setParameter('country', $pinFilterDto->getCountry());
         }
 
         if ($pinFilterDto->getTags()->count() > 0) {

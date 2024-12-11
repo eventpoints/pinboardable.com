@@ -38,7 +38,7 @@
                                 {{ form_row(pinFilter.keyword) }}
                             </div>
                             <div class="col-12 col-md-4">
-                                {{ form_row(pinFilter.pinTypeEnum) }}
+                                {{ form_row(pinFilter.country) }}
                             </div>
                             <div class="col-12 col-md-4">
                                 {{ form_row(pinFilter.tags) }}
@@ -64,6 +64,11 @@
                                     <div class="fw-bold">{{ pin.title }}</div>
                                     <div class="small">{{ pin.createdAt.diffForHumans }}</div>
                                     <hr class="my-2"/>
+                                    {% if pin.country is empty %}
+                                        <div class="badge text-bg-dark">{{ 'online'|trans|title }}</div>
+                                    {% else %}
+                                        <div class="badge text-bg-dark">{{ pin.country|country_name }}</div>
+                                    {% endif %}
                                     {% for tag in pin.tags %}
                                         <div class="badge {{ app.request.get('pin') == pin.id ? "text-bg-light" : "text-bg-primary" }}">{{ tag.title|trans }}</div>
                                     {% endfor %}
@@ -89,7 +94,7 @@
                                         <input type="hidden" {{ stimulus_target('clipboard', 'source') }}
                                                value="{{ url('landing', {pin: pin.id }) }}"/>
                                         <button type="button" {{ stimulus_action('clipboard', 'copy', 'click') }} {{ stimulus_target('clipboard', 'button') }}
-                                                class="btn rounded-pill btn-light">
+                                                class="btn rounded-pill btn-outline-primary">
                                             <i class="bi bi-link fs-4"></i>
                                         </button>
                                     </div>

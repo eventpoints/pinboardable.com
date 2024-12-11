@@ -12,7 +12,7 @@ final class PinFilterDto
 {
     private null|string $keyword = null;
 
-    private null|PinTypeEnum $pinTypeEnum = null;
+    private null|string $country = null;
 
     /**
      * @var ArrayCollection<int, Tag>
@@ -34,14 +34,14 @@ final class PinFilterDto
         $this->keyword = $keyword;
     }
 
-    public function getPinTypeEnum(): ?PinTypeEnum
+    public function getCountry(): ?string
     {
-        return $this->pinTypeEnum;
+        return $this->country;
     }
 
-    public function setPinTypeEnum(?PinTypeEnum $pinTypeEnum): void
+    public function setCountry(?string $country): void
     {
-        $this->pinTypeEnum = $pinTypeEnum;
+        $this->country = $country;
     }
 
     /**
