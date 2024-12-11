@@ -18,7 +18,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class PinFilterType extends AbstractType
 {
     public function __construct(
-            private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator
     )
     {
     }
@@ -26,50 +26,50 @@ class PinFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-                ->setMethod(Request::METHOD_GET)
-                ->add('keyword', TextType::class, [
-                        'required' => false,
-                        'label' => ucfirst($this->translator->trans('keyword')),
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'attr' => [
-                                'placeholder' => ucfirst($this->translator->trans('keyword')),
-                        ],
-                ])
-                ->add('country', CountryType::class, [
-                        'label' => false,
-                        'required' => false,
-                        'attr' => [
-                                'placeholder' => ucfirst($this->translator->trans('country')),
-                        ],
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'autocomplete' => true,
-                ])->add('tags', EntityType::class, [
-                        'label' => false,
-                        'placeholder' => $this->translator->trans('tags'),
-                        'choice_label' => function (Tag $tag): string {
-                            return $this->translator->trans($tag->getTitle());
-                        },
-                        'attr' => [
-                                'placeholder' => ucfirst($this->translator->trans('tags'))
-                        ],
-                        'required' => false,
-                        'row_attr' => [
-                                'class' => 'form-floating',
-                        ],
-                        'class' => Tag::class,
-                        'multiple' => true,
-                        'autocomplete' => true,
+            ->setMethod(Request::METHOD_GET)
+            ->add('keyword', TextType::class, [
+                'required' => false,
+                'label' => ucfirst($this->translator->trans('keyword')),
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'attr' => [
+                    'placeholder' => ucfirst($this->translator->trans('keyword')),
+                ],
+            ])
+            ->add('country', CountryType::class, [
+                'label' => false,
+                'required' => false,
+                'attr' => [
+                    'placeholder' => ucfirst($this->translator->trans('country')),
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'autocomplete' => true,
+            ])->add('tags', EntityType::class, [
+                    'label' => false,
+                    'placeholder' => $this->translator->trans('tags'),
+                    'choice_label' => function (Tag $tag): string {
+                        return $this->translator->trans($tag->getTitle());
+                    },
+                    'attr' => [
+                        'placeholder' => ucfirst($this->translator->trans('tags')),
+                    ],
+                    'required' => false,
+                    'row_attr' => [
+                        'class' => 'form-floating',
+                    ],
+                    'class' => Tag::class,
+                    'multiple' => true,
+                    'autocomplete' => true,
                 ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-                'data_class' => PinFilterDto::class,
+            'data_class' => PinFilterDto::class,
         ]);
     }
 }
