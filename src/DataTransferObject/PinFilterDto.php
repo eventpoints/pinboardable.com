@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\DataTransferObject;
 
 use App\Entity\Tag;
-use App\Enum\PinTypeEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 
 final class PinFilterDto

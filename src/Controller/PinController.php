@@ -12,19 +12,16 @@ use App\Repository\PinRepository;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class PinController extends AbstractController
 {
     public function __construct(
-            private readonly PinRepository       $pinRepository,
-            private readonly UserRepository      $userRepository,
-            private readonly HttpClientInterface $cloudflareTurnstileClient,
-            private readonly PaginatorInterface  $paginator
+        private readonly PinRepository $pinRepository,
+        private readonly UserRepository $userRepository,
+        private readonly PaginatorInterface $paginator
     )
     {
     }
@@ -42,14 +39,14 @@ class PinController extends AbstractController
             $pinsQuery = $this->pinRepository->findByFilter(pinFilterDto: $pinFilterDto, isQuery: true);
             $pinsPagination = $this->paginator->paginate(target: $pinsQuery, page: $request->query->getInt('page', 1), limit: 50);
             return $this->render('pins/index.html.twig', [
-                    'pinFilter' => $pinFilter,
-                    'pinsPagination' => $pinsPagination,
+                'pinFilter' => $pinFilter,
+                'pinsPagination' => $pinsPagination,
             ]);
         }
 
         return $this->render('pins/index.html.twig', [
-                'pinFilter' => $pinFilter,
-                'pinsPagination' => $pinsPagination,
+            'pinFilter' => $pinFilter,
+            'pinsPagination' => $pinsPagination,
         ]);
     }
 
@@ -72,12 +69,12 @@ class PinController extends AbstractController
 
             $id = $pin->getId();
             return $this->redirectToRoute('landing', [
-                    '_fragment' => "pin_$id",
+                '_fragment' => "pin_$id",
             ]);
         }
 
         return $this->render('pins/create.html.twig', [
-                'pinForm' => $pinForm,
+            'pinForm' => $pinForm,
         ]);
     }
 }

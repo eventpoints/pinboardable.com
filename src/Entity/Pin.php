@@ -200,5 +200,4 @@ class Pin
     {
         $this->country = $country;
     }
-
 }

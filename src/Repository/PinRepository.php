@@ -7,7 +7,6 @@ namespace App\Repository;
 use App\DataTransferObject\PinFilterDto;
 use App\Entity\Pin;
 use App\Entity\Tag;
-use App\Enum\PinTypeEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\Query;
@@ -62,7 +61,7 @@ class PinRepository extends ServiceEntityRepository
             )->setParameter('keyword', '%' . strtolower($pinFilterDto->getKeyword()) . '%');
         }
 
-        if (!empty($pinFilterDto->getCountry())) {
+        if (! empty($pinFilterDto->getCountry())) {
             $qb->andWhere(
                 $qb->expr()->eq('pin.country', ':country')
             )->setParameter('country', $pinFilterDto->getCountry());
