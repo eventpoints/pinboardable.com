@@ -48,22 +48,22 @@ class PinFilterType extends AbstractType
                 ],
                 'autocomplete' => true,
             ])->add('tags', EntityType::class, [
-                    'label' => false,
-                    'placeholder' => $this->translator->trans('tags'),
-                    'choice_label' => function (Tag $tag): string {
-                        return $this->translator->trans($tag->getTitle());
-                    },
-                    'attr' => [
-                        'placeholder' => ucfirst($this->translator->trans('tags')),
-                    ],
-                    'required' => false,
-                    'row_attr' => [
-                        'class' => 'form-floating',
-                    ],
-                    'class' => Tag::class,
-                    'multiple' => true,
-                    'autocomplete' => true,
-                ]);
+                'label' => false,
+                'placeholder' => $this->translator->trans('tags'),
+                'choice_label' => function (Tag $tag): string {
+                    return $this->translator->trans($tag->getTitle());
+                },
+                'attr' => [
+                    'placeholder' => ucfirst($this->translator->trans('tags')),
+                ],
+                'required' => false,
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+                'class' => Tag::class,
+                'multiple' => true,
+                'autocomplete' => true,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
